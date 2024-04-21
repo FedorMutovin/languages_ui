@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex flex-center">
+  <q-page class="flex justify-center">
     <q-card flat>
       <q-card-section class="text-center">
         <q-avatar size="100px">
@@ -64,33 +64,45 @@ export default {
       email,
       password,
       accept,
-
-      onSubmit () {
-        console.log()
-        if (accept.value !== true) {
-          $q.notify({
-            color: 'red-5',
-            textColor: 'white',
-            icon: 'warning',
-            message: 'You need to accept the license and terms first'
-          })
-        }
-        else {
-          $q.notify({
-            color: 'green-4',
-            textColor: 'white',
-            icon: 'cloud_done',
-            message: 'Submitted'
-          })
-        }
-      },
-
-      onReset () {
-        email.value = null
-        password.value = null
-        accept.value = false
-      }
     }
+  },
+
+  methods: {
+    fetchData() {
+      this.$api.languages.index()
+        .then(response => {
+          console.log(response.data)
+        })
+        .catch(error => {
+          console.error('There was an error!', error);
+        });
+    },
+
+    onSubmit () {
+      this.fetchData()
+      if (this.accept.value !== true) {
+        this.$q.notify({
+          color: 'red-5',
+          textColor: 'white',
+          icon: 'warning',
+          message: 'You need to accept the license and terms first'
+        })
+      }
+      else {
+        this.$q.notify({
+          color: 'green-4',
+          textColor: 'white',
+          icon: 'cloud_done',
+          message: 'Submitted'
+        })
+      }
+    },
+
+    onReset () {
+      this.email.value = null
+      this.password.value = null
+      this.accept.value = false
+    },
   }
 }
 </script>
