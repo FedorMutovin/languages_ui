@@ -1,108 +1,114 @@
 <template>
-  <q-page class="flex justify-center">
-    <q-card flat>
-      <q-card-section class="text-center">
-        <q-avatar size="100px">
-          <img src="~assets/main-icon.png">
-        </q-avatar>
-      </q-card-section>
-      <q-card-section>
-        <div class="text-h6 text-dark text-center">Sign in to your account</div>
-      </q-card-section>
-      <q-card-section>
-          <div style="max-width: 600px">
+  <q-card flat class="q-pa-md" style="width: 100%; max-width: 600px; margin: auto;">
+    <q-card-section>
+      <div class="text-h6 text-dark text-center">Log in</div>
+      <div class="text-subtitle2 text-center q-mt-sm">
+        Don't have an account?
+        <router-link to="/sign_up" class="text-primary">Sign up</router-link>
+      </div>
+    </q-card-section>
+    <q-card-section>
+      <div style="max-width: 350px; margin: auto; width: 100%;">
+        <q-form
+          @submit="onSubmit"
+          class="q-gutter-md"
+        >
+          <q-input
+            outlined
+            clearable
+            v-model="email"
+            type="email"
+            label="Email"
+            :error-message="errors.email ? errors.email[0] : ''"
+            :error="errors.email !== undefined"
+            @focus="delete errors.email"
+          />
 
-            <q-form
-              @submit="onSubmit"
-              @reset="onReset"
-              class="q-gutter-md"
-            >
-              <q-input
-                filled
-                v-model="email"
-                label="Your email *"
-                lazy-rules
-                :rules="[ val => val && val.length > 0 || 'Please type something']"
+          <q-input v-model="password"
+                   outlined :type="hidePassword ? 'password' : 'text'"
+                   lazy-rules
+                   label="Password"
+                   :error-message="errors.password ? errors.password[0] : ''"
+                   :error="errors.password !== undefined"
+                   @focus="delete errors.password"
+          >
+            <template v-slot:append>
+              <q-icon
+                :name="hidePassword ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="hidePassword = !hidePassword"
               />
+            </template>
+          </q-input>
 
-              <q-input
-                filled
-                v-model="password"
-                label="Your password *"
-                lazy-rules
-                :rules="[ val => val && val.length > 0 || 'Please type something']"
-              />
-
-              <q-toggle v-model="accept" label="I accept the license and terms" />
-
-              <div>
-                <q-btn label="Submit" type="submit" color="primary"/>
-                <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
-              </div>
-            </q-form>
-
+          <q-toggle v-model="accept" label="I accept the license and terms" class="q-mt-md" />
+          <div class="row justify-center q-mt-md">
+            <q-btn rounded
+                   :loading="loading"
+                   label="LOG IN"
+                   type="submit"
+                   color="primary"
+                   style="width: 300px"
+                   class="full-width"
+            />
           </div>
-      </q-card-section>
-    </q-card>
-  </q-page>
+        </q-form>
+      </div>
+    </q-card-section>
+  </q-card>
 </template>
 
 <script>
-import { useQuasar } from 'quasar'
+// import { useQuasar } from 'quasar'
 import { ref } from 'vue'
+import { useDefaultData } from "components/mixins/use_default_data";
+import { useApi } from 'components/mixins/use_api';
+import { useRouter } from 'vue-router';
+import { useUserStore } from "stores/user_store"
+import { useSessionStore } from "stores/session_store"
 
 export default {
   name: 'LoginPage',
   setup () {
-    const $q = useQuasar()
-
+    // const $q = useQuasar()
+    const { loading, errors } = useDefaultData();
     const email = ref(null)
     const password = ref(null)
+    const hidePassword = ref(true)
+    const { api } = useApi();
+    const router = useRouter();
     const accept = ref(false)
+    const userStore = useUserStore();
+    const sessionStore = useSessionStore();
 
     return {
+      userStore,
+      sessionStore,
       email,
       password,
       accept,
+      hidePassword,
+      loading,
+      errors,
+      onSubmit: async() => {
+        loading.value = true;
+        const formData = new FormData();
+        formData.append("user[email]", email.value);
+        formData.append("user[password]", password.value);
+
+        try {
+          const response = await api.sessions.create(formData);
+          await sessionStore.updateToken(response.headers.authorization);
+          await userStore.setUser(response.data);
+          await router.push({name: 'account'});
+        } catch (error) {
+          console.log(error)
+          errors.value = error.response.data.errors;
+        } finally {
+          loading.value = false;
+        }
+      }
     }
   },
-
-  methods: {
-    fetchData() {
-      this.$api.languages.index()
-        .then(response => {
-          console.log(response.data)
-        })
-        .catch(error => {
-          console.error('There was an error!', error);
-        });
-    },
-
-    onSubmit () {
-      this.fetchData()
-      if (this.accept.value !== true) {
-        this.$q.notify({
-          color: 'red-5',
-          textColor: 'white',
-          icon: 'warning',
-          message: 'You need to accept the license and terms first'
-        })
-      }
-      else {
-        this.$q.notify({
-          color: 'green-4',
-          textColor: 'white',
-          icon: 'cloud_done',
-          message: 'Submitted'
-        })
-      }
-    },
-
-    onReset () {
-      this.email.value = null
-      this.password.value = null
-      this.accept.value = false
-    },
-  }
 }
 </script>
