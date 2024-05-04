@@ -58,57 +58,43 @@
   </q-card>
 </template>
 
-<script>
-// import { useQuasar } from 'quasar'
-import { ref } from 'vue'
+<script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useUserStore } from "stores/user_store";
+import { useSessionStore } from "stores/session_store";
 import { useDefaultData } from "components/mixins/use_default_data";
 import { useApi } from 'components/mixins/use_api';
-import { useRouter } from 'vue-router';
-import { useUserStore } from "stores/user_store"
-import { useSessionStore } from "stores/session_store"
 
-export default {
-  name: 'LoginPage',
-  setup () {
-    // const $q = useQuasar()
-    const { loading, errors } = useDefaultData();
-    const email = ref(null)
-    const password = ref(null)
-    const hidePassword = ref(true)
-    const { api } = useApi();
-    const router = useRouter();
-    const accept = ref(false)
-    const userStore = useUserStore();
-    const sessionStore = useSessionStore();
+// const $q = useQuasar();
+const router = useRouter();
+const { api } = useApi();
+const { loading, errors } = useDefaultData();
+const userStore = useUserStore();
+const sessionStore = useSessionStore();
 
-    return {
-      userStore,
-      sessionStore,
-      email,
-      password,
-      accept,
-      hidePassword,
-      loading,
-      errors,
-      onSubmit: async() => {
-        loading.value = true;
-        const formData = new FormData();
-        formData.append("user[email]", email.value);
-        formData.append("user[password]", password.value);
+const email = ref(null);
+const password = ref(null);
+const hidePassword = ref(true);
+const accept = ref(false);
 
-        try {
-          const response = await api.sessions.create(formData);
-          await sessionStore.updateToken(response.headers.authorization);
-          await userStore.setUser(response.data);
-          await router.push({name: 'account'});
-        } catch (error) {
-          console.log(error)
-          errors.value = error.response.data.errors;
-        } finally {
-          loading.value = false;
-        }
-      }
-    }
-  },
-}
+const onSubmit = async () => {
+  loading.value = true;
+  const formData = new FormData();
+  formData.append("user[email]", email.value);
+  formData.append("user[password]", password.value);
+
+  try {
+    const response = await api.sessions.create(formData);
+    await sessionStore.updateToken(response.headers.authorization);
+    await userStore.setUser(response.data);
+    await router.push({name: 'account'});
+  } catch (error) {
+    console.log(error);
+    errors.value = error.response.data.errors;
+  } finally {
+    loading.value = false;
+  }
+};
 </script>
+
