@@ -55,44 +55,34 @@
   </q-card>
 </template>
 
-<script>
-import { ref } from 'vue'
+<script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { useDefaultData } from "components/mixins/use_default_data";
 import { useApi } from 'components/mixins/use_api';
-import { useRouter } from 'vue-router';
 
-export default {
-  name: 'RegistrationPage',
-  setup () {
-    const { loading, errors } = useDefaultData();
-    const email = ref(null)
-    const password = ref(null)
-    const hidePassword = ref(true)
-    const { api } = useApi();
-    const router = useRouter();
+const router = useRouter();
+const { api } = useApi();
+const { loading, errors } = useDefaultData();
 
-    return {
-      email,
-      password,
-      hidePassword,
-      loading,
-      errors,
-      onSubmit: async() => {
-        loading.value = true;
-        const formData = new FormData();
-        formData.append("user[email]", email.value);
-        formData.append("user[password]", password.value);
+const email = ref(null);
+const password = ref(null);
+const hidePassword = ref(true);
 
-        try {
-          await api.registrations.create(formData);
-          await router.push({name: 'sign_in'});
-        } catch (error) {
-          errors.value = error.response.data.errors;
-        } finally {
-          loading.value = false;
-        }
-      }
-    }
-  },
-}
+const onSubmit = async () => {
+  loading.value = true;
+  const formData = new FormData();
+  formData.append("user[email]", email.value);
+  formData.append("user[password]", password.value);
+
+  try {
+    await api.registrations.create(formData);
+    await router.push({name: 'sign_in'});
+  } catch (error) {
+    errors.value = error.response.data.errors;
+  } finally {
+    loading.value = false;
+  }
+};
 </script>
+

@@ -1,6 +1,7 @@
 import { route } from 'quasar/wrappers'
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from 'vue-router'
 import routes from './routes'
+import { useSessionStore } from 'stores/session_store';
 
 /*
  * If not building with SSR mode, you can
@@ -25,6 +26,15 @@ export default route(function (/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> publicPath
     history: createHistory(process.env.VUE_ROUTER_BASE)
   })
+
+  Router.beforeEach((to, from, next) => {
+    const sessionStore = useSessionStore();
+    if (to.matched.some(record => record.meta.requiresAuth) && !sessionStore.isAuthorized) {
+      next({ name: 'sign_in' });
+    } else {
+      next();
+    }
+  });
 
   return Router
 })

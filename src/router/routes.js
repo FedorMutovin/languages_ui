@@ -1,6 +1,6 @@
 const routes = [
   {
-    name: 'account', path: '/account', component: () => import('layouts/MainLayout.vue')
+    name: 'account', path: '/account', component: () => import('layouts/MainLayout.vue'), meta: { requiresAuth: true },
   },
   { path: '/', component: () => import('layouts/AuthenticationLayout.vue'), children: [
       { path: '', redirect: '/sign_in' },
