@@ -28,7 +28,7 @@
       bg-color="secondary"
       class="q-pa-md"
     >
-      <template v-slot:name>Mary</template>
+      <template v-slot:name>You</template>
       <template v-slot:avatar>
         <q-icon
           name="mdi-account-school-outline"
@@ -36,7 +36,7 @@
         />
       </template>
       <div>
-        Already building an app with it...
+        Hi! Let me think...
       </div>
       <q-spinner-dots size="2rem" />
     </q-chat-message>

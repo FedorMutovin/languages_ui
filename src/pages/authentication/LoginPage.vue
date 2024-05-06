@@ -1,10 +1,10 @@
 <template>
   <q-card flat class="q-pa-md" style="width: 100%; max-width: 600px; margin: auto;">
     <q-card-section>
-      <div class="text-h6 text-dark text-center">Log in</div>
+      <div class="text-h6 text-dark text-center">{{ $t('authorization.login') }}</div>
       <div class="text-subtitle2 text-center q-mt-sm">
-        Don't have an account?
-        <router-link to="/sign_up" class="text-primary">Sign up</router-link>
+        {{ $t('authorization.signup_tip') }}
+        <router-link to="/sign_up" class="text-primary">{{ $t('authorization.signup') }}</router-link>
       </div>
     </q-card-section>
     <q-card-section>
@@ -18,7 +18,7 @@
             clearable
             v-model="email"
             type="email"
-            label="Email"
+            :label="$t('authorization.email')"
             :error-message="errors.email ? errors.email[0] : ''"
             :error="errors.email !== undefined"
             @focus="delete errors.email"
@@ -27,7 +27,7 @@
           <q-input v-model="password"
                    outlined :type="hidePassword ? 'password' : 'text'"
                    lazy-rules
-                   label="Password"
+                   :label="$t('authorization.password')"
                    :error-message="errors.password ? errors.password[0] : ''"
                    :error="errors.password !== undefined"
                    @focus="delete errors.password"
@@ -40,12 +40,10 @@
               />
             </template>
           </q-input>
-
-          <q-toggle v-model="accept" label="I accept the license and terms" class="q-mt-md" />
           <div class="row justify-center q-mt-md">
             <q-btn rounded
                    :loading="loading"
-                   label="LOG IN"
+                   :label="$t('authorization.login_submit')"
                    type="submit"
                    color="primary"
                    style="width: 300px"
@@ -76,7 +74,6 @@ const sessionStore = useSessionStore();
 const email = ref(null);
 const password = ref(null);
 const hidePassword = ref(true);
-const accept = ref(false);
 
 const onSubmit = async () => {
   loading.value = true;
@@ -86,8 +83,8 @@ const onSubmit = async () => {
 
   try {
     const response = await api.sessions.create(formData);
-    await sessionStore.updateToken(response.headers.authorization);
-    await userStore.setUser(response.data);
+    sessionStore.updateToken(response.headers.authorization);
+    userStore.setUser(response.data);
     await router.push({name: 'account'});
   } catch (error) {
     console.log(error);
