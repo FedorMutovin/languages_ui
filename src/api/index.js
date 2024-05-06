@@ -40,5 +40,8 @@ export default {
   },
   sessions: {
     create: (data) => api.post(`login`, data),
+  },
+  account_learning_languages: {
+    create: (data) => api.post(`account_learning_languages`, data),
   }
 }
