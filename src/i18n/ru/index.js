@@ -1,5 +1,7 @@
 export default {
-  failed: "Действие не удалось",
+  errors: {
+    unexpected: 'Что-то пошло не так',
+  },
   success: "Действие успешно",
   site_language: "Язык сайта",
   authorization: {

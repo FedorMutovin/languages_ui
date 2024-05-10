@@ -1,5 +1,7 @@
 export default {
-  failed: 'Action failed',
+  errors: {
+    unexpected: 'Something went wrong',
+  },
   success: 'Action was successful',
   site_language: 'Site Language',
   authorization: {

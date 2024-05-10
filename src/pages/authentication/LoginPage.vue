@@ -19,18 +19,12 @@
             v-model="email"
             type="email"
             :label="$t('authorization.email')"
-            :error-message="errors.email ? errors.email[0] : ''"
-            :error="errors.email !== undefined"
-            @focus="delete errors.email"
           />
 
           <q-input v-model="password"
                    outlined :type="hidePassword ? 'password' : 'text'"
                    lazy-rules
                    :label="$t('authorization.password')"
-                   :error-message="errors.password ? errors.password[0] : ''"
-                   :error="errors.password !== undefined"
-                   @focus="delete errors.password"
           >
             <template v-slot:append>
               <q-icon
@@ -64,10 +58,9 @@ import { useSessionStore } from "stores/session_store";
 import { useDefaultData } from "components/mixins/use_default_data";
 import { useApi } from 'components/mixins/use_api';
 
-// const $q = useQuasar();
 const router = useRouter();
 const { api } = useApi();
-const { loading, errors } = useDefaultData();
+const { loading } = useDefaultData();
 const userStore = useUserStore();
 const sessionStore = useSessionStore();
 
@@ -83,13 +76,14 @@ const onSubmit = async () => {
 
   try {
     const response = await api.sessions.create(formData);
-    sessionStore.updateToken(response.headers.authorization);
+    const token = response.headers.authorization.split(' ')[1];
+    sessionStore.updateToken(token);
     userStore.setUser(response.data);
     await router.push({name: 'account'});
-  } catch (error) {
-    console.log(error);
-    errors.value = error.response.data.errors;
-  } finally {
+  } catch (e) {
+    console.log(e);
+  }
+  finally {
     loading.value = false;
   }
 };

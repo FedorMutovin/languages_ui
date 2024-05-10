@@ -22,7 +22,7 @@ import { useApi } from 'components/mixins/use_api';
 
 const router = useRouter();
 const { api } = useApi();
-const { loading, errors } = useDefaultData();
+const { loading } = useDefaultData();
 const accountLearningLanguageStore = useAccountLearningLanguageStore();
 const languagesStore = useLanguagesStore();
 const submit = async (language) => {
@@ -36,7 +36,6 @@ const submit = async (language) => {
     await router.push({name: 'account'});
   } catch (error) {
     console.log(error);
-    errors.value = error.response.data.errors;
   } finally {
     loading.value = false;
   }

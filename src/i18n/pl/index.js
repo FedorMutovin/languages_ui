@@ -1,5 +1,7 @@
 export default {
-  failed: "Akcja nie powiodła się",
+  errors: {
+    unexpected: 'Coś poszło nie tak',
+  },
   success: "Akcja zakończona sukcesem",
   site_language: "Język strony",
   authorization: {
