@@ -1,15 +1,13 @@
-import axios from 'axios'
+import axios from 'axios';
 import { i18n } from "boot/i18n";
 import { Notify } from "quasar";
 import { useUserStore } from "stores/user_store";
-import { useSessionStore} from "stores/session_store";
+import { useSessionStore } from "stores/session_store";
 
-const api = axios.create(
-  {
-    baseURL: process.env.API_URL,
-    headers: { "Content-Type": "application/json" }
-  }
-)
+const api = axios.create({
+  baseURL: process.env.API_URL,
+  headers: { "Content-Type": "application/json" }
+});
 
 api.interceptors.request.use(config => {
   const sessionStore = useSessionStore();
@@ -33,7 +31,7 @@ api.interceptors.response.use(response => response, error => {
       const errors = error.response.data.errors;
       message = Object.entries(errors).map(([key, value]) => `${key}: ${value}`).join(', ');
     } else {
-      message = error.response.data
+      message = error.response.data;
     }
   }
 
@@ -46,18 +44,4 @@ api.interceptors.response.use(response => response, error => {
   return Promise.reject(error);
 });
 
-
-export const apiServices = {
-  languages: {
-    index: () => api.get(`languages`),
-  },
-  registrations: {
-    create: (data) => api.post(`signup`, data),
-  },
-  sessions: {
-    create: (data) => api.post(`login`, data),
-  },
-  account_learning_languages: {
-    create: (data) => api.post(`account_learning_languages`, data),
-  }
-}
+export default api;

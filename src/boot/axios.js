@@ -1,5 +1,5 @@
 import { boot } from 'quasar/wrappers'
-import { apiServices } from "src/api";
+import { apiServices } from "src/api/services";
 
 // Be careful when using SSR for cross-request state pollution
 // due to creating a Singleton instance here;

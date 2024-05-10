@@ -5,7 +5,7 @@
         <q-toolbar-title>
           Learning Languages
         </q-toolbar-title>
-        <q-btn dense flat round icon="mdi-dots-horizontal" />
+        <AccountSettings/>
       </q-toolbar>
     </q-header>
 
@@ -18,4 +18,5 @@
 
 <script setup>
 import LanguageAssistant from "components/account/LanguageAssistant.vue";
+import AccountSettings from "components/account/AccountSettings.vue";
 </script>

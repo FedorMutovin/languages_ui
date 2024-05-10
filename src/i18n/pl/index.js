@@ -18,6 +18,7 @@ export default {
     signup_submit: "UTWÓRZ KONTO"
   },
   account: {
-    choose_language: "Wybierz język do nauki"
+    choose_language: "Wybierz język do nauki",
+    settings: "Ustawienia"
   }
 }

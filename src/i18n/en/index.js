@@ -18,6 +18,7 @@ export default {
     signup_submit: "CREATE ACCOUNT",
   },
   account: {
-    choose_language: "Choose a language to learn"
+    choose_language: "Choose a language to learn",
+    settings: "Settings"
   }
 }
