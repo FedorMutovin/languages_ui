@@ -44,6 +44,7 @@
           <div class="row justify-center q-mt-md">
             <q-btn
               rounded
+              push
               :loading="loading"
               :label="$t('authorization.login_submit')"
               type="submit"

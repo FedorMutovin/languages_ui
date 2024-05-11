@@ -1,4 +1,4 @@
-import api from './index';
+import api from "./index";
 
 export const apiServices = {
   languages: {
@@ -13,7 +13,12 @@ export const apiServices = {
   },
   account_learning_languages: {
     create: (data) => api.post(`account_learning_languages`, data),
-  }
+  },
+  language_assistant: {
+    message_history: () => api.get(`language_assistant/message_history`),
+    create_message: (data) =>
+      api.post(`language_assistant/create_message`, data),
+  },
 };
 
 export default apiServices;
