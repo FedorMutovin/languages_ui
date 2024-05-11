@@ -1,18 +1,23 @@
 <template>
-  <q-card flat class="q-pa-md" style="width: 100%; max-width: 600px; margin: auto;">
+  <q-card
+    flat
+    class="q-pa-md"
+    style="width: 100%; max-width: 600px; margin: auto"
+  >
     <q-card-section>
-      <div class="text-h6 text-dark text-center">{{ $t('authorization.login') }}</div>
+      <div class="text-h6 text-dark text-center">
+        {{ $t("authorization.login") }}
+      </div>
       <div class="text-subtitle2 text-center q-mt-sm">
-        {{ $t('authorization.signup_tip') }}
-        <router-link to="/sign_up" class="text-primary">{{ $t('authorization.signup') }}</router-link>
+        {{ $t("authorization.signup_tip") }}
+        <router-link to="/sign_up" class="text-primary">{{
+          $t("authorization.signup")
+        }}</router-link>
       </div>
     </q-card-section>
     <q-card-section>
-      <div style="max-width: 350px; margin: auto; width: 100%;">
-        <q-form
-          @submit="onSubmit"
-          class="q-gutter-md"
-        >
+      <div style="max-width: 350px; margin: auto; width: 100%">
+        <q-form @submit="onSubmit" class="q-gutter-md">
           <q-input
             outlined
             clearable
@@ -21,10 +26,12 @@
             :label="$t('authorization.email')"
           />
 
-          <q-input v-model="password"
-                   outlined :type="hidePassword ? 'password' : 'text'"
-                   lazy-rules
-                   :label="$t('authorization.password')"
+          <q-input
+            v-model="password"
+            outlined
+            :type="hidePassword ? 'password' : 'text'"
+            lazy-rules
+            :label="$t('authorization.password')"
           >
             <template v-slot:append>
               <q-icon
@@ -35,13 +42,14 @@
             </template>
           </q-input>
           <div class="row justify-center q-mt-md">
-            <q-btn rounded
-                   :loading="loading"
-                   :label="$t('authorization.login_submit')"
-                   type="submit"
-                   color="primary"
-                   style="width: 300px"
-                   class="full-width"
+            <q-btn
+              rounded
+              :loading="loading"
+              :label="$t('authorization.login_submit')"
+              type="submit"
+              color="primary"
+              style="width: 300px"
+              class="full-width"
             />
           </div>
         </q-form>
@@ -51,12 +59,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 import { useUserStore } from "stores/user_store";
 import { useSessionStore } from "stores/session_store";
-import { useDefaultData } from "components/mixins/use_default_data";
-import { useApi } from 'components/mixins/use_api';
+import { useDefaultData } from "components/use/default_data";
+import { useApi } from "components/use/api";
 
 const router = useRouter();
 const { api } = useApi();
@@ -76,16 +84,14 @@ const onSubmit = async () => {
 
   try {
     const response = await api.sessions.create(formData);
-    const token = response.headers.authorization.split(' ')[1];
+    const token = response.headers.authorization.split(" ")[1];
     sessionStore.updateToken(token);
     userStore.setUser(response.data);
-    await router.push({name: 'account'});
+    await router.push({ name: "account" });
   } catch (e) {
     console.log(e);
-  }
-  finally {
+  } finally {
     loading.value = false;
   }
 };
 </script>
-

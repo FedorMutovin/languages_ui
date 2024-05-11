@@ -2,10 +2,8 @@
   <q-layout view="hHh lpR fFf">
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
-        <q-toolbar-title>
-          Learning Languages
-        </q-toolbar-title>
-        <AccountSettings/>
+        <q-toolbar-title> Learning Languages </q-toolbar-title>
+        <AccountSettings />
       </q-toolbar>
     </q-header>
 

@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { useApi } from 'components/mixins/use_api';
+import { useApi } from "components/use/api";
 
 export const useLanguagesStore = defineStore("LanguagesStore", {
   state: () => {
@@ -13,8 +13,8 @@ export const useLanguagesStore = defineStore("LanguagesStore", {
       const { api } = useApi();
       try {
         const response = await api.languages.index();
-        this.for_interface = response.data.filter(lang => lang.for_interface);
-        this.for_learning = response.data.filter(lang => lang.for_learning);
+        this.for_interface = response.data.filter((lang) => lang.for_interface);
+        this.for_learning = response.data.filter((lang) => lang.for_learning);
       } catch (error) {
         console.error("Failed to fetch languages:", error);
         throw error;
@@ -22,16 +22,18 @@ export const useLanguagesStore = defineStore("LanguagesStore", {
     },
 
     findLanguageIdByLocale(locale) {
-      const language = this.for_interface.find(lang => lang.locale === locale);
+      const language = this.for_interface.find(
+        (lang) => lang.locale === locale
+      );
       return language ? language.id : null;
     },
 
     getFlagCodeByLocale(locale) {
-      if(locale === 'en') {
-        return 'gb'
+      if (locale === "en") {
+        return "gb";
       } else {
-        return locale
+        return locale;
       }
-    }
+    },
   },
 });

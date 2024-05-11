@@ -1,6 +1,6 @@
 export default {
   errors: {
-    unexpected: 'Coś poszło nie tak',
+    unexpected: "Coś poszło nie tak",
   },
   success: "Akcja zakończona sukcesem",
   site_language: "Język strony",
@@ -15,10 +15,10 @@ export default {
     terms: "Akceptuję warunki licencji",
     login_submit: "ZALOGUJ SIĘ",
     signup_title: "Utwórz swoje konto",
-    signup_submit: "UTWÓRZ KONTO"
+    signup_submit: "UTWÓRZ KONTO",
   },
   account: {
     choose_language: "Wybierz język do nauki",
-    settings: "Ustawienia"
-  }
-}
+    settings: "Ustawienia",
+  },
+};

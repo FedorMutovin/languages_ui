@@ -1,13 +1,13 @@
 export default {
   errors: {
-    unexpected: 'Something went wrong',
+    unexpected: "Something went wrong",
   },
-  success: 'Action was successful',
-  site_language: 'Site Language',
+  success: "Action was successful",
+  site_language: "Site Language",
   authorization: {
-    login: 'Log in',
-    logout: 'Logout',
-    site_language: 'Site Language',
+    login: "Log in",
+    logout: "Logout",
+    site_language: "Site Language",
     signup_tip: "Don't have an account?",
     signup: "Sign up",
     email: "Email",
@@ -19,6 +19,6 @@ export default {
   },
   account: {
     choose_language: "Choose a language to learn",
-    settings: "Settings"
-  }
-}
+    settings: "Settings",
+  },
+};
