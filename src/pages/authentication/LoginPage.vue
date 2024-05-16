@@ -84,9 +84,7 @@ const onSubmit = async () => {
   formData.append("user[password]", password.value);
 
   try {
-    const response = await api.sessions.create(formData);
-    const token = response.headers.authorization.split(" ")[1];
-    sessionStore.updateToken(token);
+    const response = await sessionStore.create(formData);
     userStore.setUser(response.data);
     await router.push({ name: "account" });
   } catch (e) {
