@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { useApi } from "components/use/api";
+import { apiServices } from "src/utils/api/services";
 
 export const useLanguagesStore = defineStore("LanguagesStore", {
   state: () => {
@@ -10,9 +10,8 @@ export const useLanguagesStore = defineStore("LanguagesStore", {
   },
   actions: {
     async getAllLanguages() {
-      const { api } = useApi();
       try {
-        const response = await api.languages.index();
+        const response = await apiServices.languages.index();
         this.for_interface = response.data.filter((lang) => lang.for_interface);
         this.for_learning = response.data.filter((lang) => lang.for_learning);
       } catch (error) {

@@ -65,11 +65,9 @@ import { useUserStore } from "stores/user_store";
 import { useLanguagesStore } from "stores/languages_store";
 import { useSessionStore } from "stores/session_store";
 import { useDefaultData } from "components/use/default_data";
-import { useApi } from "components/use/api";
 import { useI18n } from "vue-i18n";
 
 const router = useRouter();
-const { api } = useApi();
 const { loading } = useDefaultData();
 const userStore = useUserStore();
 const languagesStore = useLanguagesStore();
@@ -92,10 +90,9 @@ const onSubmit = async () => {
   );
 
   try {
-    const response = await api.registrations.create(formData);
-    const token = await response.headers.authorization.split(" ")[1];
+    const response = await userStore.create(formData);
+    const token = response.headers.authorization.split(" ")[1];
     sessionStore.updateToken(token);
-    userStore.setUser(response.data);
     await router.push({ name: "choose_language" });
   } catch (e) {
     console.log(e);
