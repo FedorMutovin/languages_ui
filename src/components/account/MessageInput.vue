@@ -1,9 +1,10 @@
 <template>
   <div class="row justify-center">
-    <div class="q-pa-md col-12 col-md-5">
+    <div class="q-pa-md col-12 col-md-7">
       <q-input
         rounded
         outlined
+        autogrow
         placeholder="Write something"
         v-model="messageBody"
         @keyup.enter="sendMessage"

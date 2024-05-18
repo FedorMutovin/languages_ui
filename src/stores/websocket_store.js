@@ -6,7 +6,6 @@ export const useWebSocketStore = defineStore("WebSocketStore", {
   state: () => {
     return {
       cable: null,
-      channel: null,
     };
   },
   actions: {

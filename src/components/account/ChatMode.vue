@@ -1,4 +1,17 @@
 <template>
+  <div class="row justify-center">
+    <div class="col-4 col-md-2">
+      <q-select
+        filled
+        options-cover
+        behavior="menu"
+        dense
+        v-model="chatStore.mode"
+        :options="['Translate', 'Correct']"
+        label="Select Mode"
+      />
+    </div>
+  </div>
   <div v-if="isTranslateMode" class="row justify-center q-ma-md">
     <div class="col">
       <div class="row justify-center">
@@ -27,19 +40,6 @@
           />
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row justify-center">
-    <div class="col-4 col-md-1">
-      <q-select
-        filled
-        options-cover
-        behavior="menu"
-        dense
-        v-model="chatStore.mode"
-        :options="['Translate', 'Correct']"
-        label="Select Mode"
-      />
     </div>
   </div>
 </template>
