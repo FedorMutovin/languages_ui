@@ -10,7 +10,7 @@
     </q-header>
 
     <q-drawer
-      overlay
+      mini-to-overlay
       behavior="desktop"
       v-model="leftDrawerOpen"
       side="left"
@@ -31,20 +31,21 @@
 </template>
 
 <script setup>
-import { ref, provide } from "vue";
-import { onMounted, onBeforeUnmount } from "vue";
+import { ref, provide, onMounted, onBeforeUnmount } from "vue";
 import { useWebSocketStore } from "stores/websocket_store";
+import { useChatStore } from "stores/chat_store";
+import { useAccountLearningLanguageStore } from "stores/account_learning_language_store";
 import ChatWindow from "components/account/ChatWindow.vue";
 import MessageInput from "components/account/MessageInput.vue";
 import AccountSettings from "components/account/AccountSettings.vue";
 import MessagesChannel from "src/channels/messages";
-import { useChatStore } from "stores/chat_store";
 import ChatMode from "components/account/ChatMode.vue";
 
 const chatStore = useChatStore();
+const webSocketStore = useWebSocketStore();
+const accountLearningLanguageStore = useAccountLearningLanguageStore();
 const leftDrawerOpen = ref(false);
 const messageChannel = ref(null);
-const webSocketStore = useWebSocketStore();
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 };
@@ -57,6 +58,7 @@ onMounted(async () => {
   messageChannel.value.on("message", (message) => {
     chatStore.appendMessages(message);
   });
+  await accountLearningLanguageStore.getCurrent()
 });
 
 onBeforeUnmount(() => {

@@ -4,8 +4,9 @@ import { apiServices } from "src/utils/api/services";
 export const useUserStore = defineStore("UserStore", {
   state: () => {
     return {
-      id: "",
-      email: "",
+      id: null,
+      email: null,
+      language: {}
     };
   },
   actions: {

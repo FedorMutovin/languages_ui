@@ -23,5 +23,10 @@ export const useChatStore = defineStore("ChatStore", {
         }
       }
     },
+    reverseLanguages() {
+      const targetLanguage = this.target_language;
+      this.target_language = this.source_language
+      this.source_language = targetLanguage;
+    }
   },
 });

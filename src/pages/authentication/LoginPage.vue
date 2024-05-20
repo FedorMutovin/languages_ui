@@ -65,10 +65,8 @@ import { useRouter } from "vue-router";
 import { useUserStore } from "stores/user_store";
 import { useSessionStore } from "stores/session_store";
 import { useDefaultData } from "components/use/default_data";
-import { useApi } from "components/use/api";
 
 const router = useRouter();
-const { api } = useApi();
 const { loading } = useDefaultData();
 const userStore = useUserStore();
 const sessionStore = useSessionStore();

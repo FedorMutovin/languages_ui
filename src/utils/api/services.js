@@ -13,6 +13,7 @@ export const apiServices = {
   },
   account_learning_languages: {
     create: (data) => api.post(`account/account_learning_languages`, data),
+    current: () => api.get(`/account/account_learning_languages/current`),
   },
 };
 

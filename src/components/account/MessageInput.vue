@@ -5,7 +5,7 @@
         rounded
         outlined
         autogrow
-        placeholder="Write something"
+        :placeholder="$t('account.message_input_placeholder')"
         v-model="messageBody"
         @keyup.enter="sendMessage"
       >

@@ -12,7 +12,7 @@
           :text="[message.body]"
           v-if="message.assistant"
         >
-          <template v-slot:name>Lexi</template>
+          <template v-slot:name>{{$t("account.chat_assistant_label")}}</template>
           <template v-slot:avatar>
             <q-icon
               name="mdi-robot-excited-outline"
@@ -21,7 +21,7 @@
           </template>
         </q-chat-message>
         <q-chat-message bg-color="secondary" class="q-pa-sm" size="10" :text="[message.body]" v-else>
-          <template v-slot:name>Me</template>
+          <template v-slot:name>{{$t("account.chat_me_label")}}</template>
           <template v-slot:avatar>
             <q-icon
               name="mdi-account-school-outline"
