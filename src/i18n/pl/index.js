@@ -20,5 +20,12 @@ export default {
   account: {
     choose_language: "Wybierz język do nauki",
     settings: "Ustawienia",
+    select_mode: "Wybierz tryb",
+    translation_mode: "Tłumaczenie",
+    correction_mode: "Korekta",
+    change_translation_direction: "Zmień kierunek tłumaczenia",
+    message_input_placeholder: "Napisz coś",
+    chat_assistant_label: "Lexi",
+    chat_me_label: "Ja"
   },
 };

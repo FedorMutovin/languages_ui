@@ -1,6 +1,7 @@
 <template>
   <div class="row justify-center">
-    <div class="col-4 col-md-2">
+    <div class="col-2 col-md-1"></div>
+    <div class="col-5 col-md-2 q-pa-sm">
       <q-select
         filled
         options-cover
@@ -8,52 +9,37 @@
         dense
         v-model="chatStore.mode"
         :options="['Translate', 'Correct']"
-        label="Select Mode"
+        :label="$t('account.select_mode')"
       />
     </div>
-  </div>
-  <div v-if="isTranslateMode" class="row justify-center q-ma-md">
-    <div class="col">
-      <div class="row justify-center">
-        <div class="col-4 col-md-1">
-          <q-select
-            filled
-            dense
-            options-cover
-            behavior="menu"
-            v-model="chatStore.source_language"
-            :options="languageOptions"
-            label="From"
-          />
-        </div>
-        <div class="col-2 col-md-1 flex justify-center">
-          <q-icon name="mdi-arrow-right" class="q-ma-md text-primary" />
-        </div>
-        <div class="col-4 col-md-1">
-          <q-select
-            filled
-            dense
-            options-cover
-            v-model="chatStore.target_language"
-            :options="languageOptions"
-            label="To"
-          />
-        </div>
-      </div>
+    <div class="col-2 col-md-1 flex self-center">
+      <q-btn v-if="isTranslateMode" color="primary" flat round icon="mdi-cog-transfer-outline" size="md">
+        <q-tooltip class="bg-primary" :offset="[10, 10]">
+          {{ $t("account.change_translation_direction") }}
+        </q-tooltip>
+        <q-menu
+          anchor="top middle"
+          self="bottom middle"
+        >
+          <div class="row q-pa-md bg-primary flex justify-center items-center">
+            <div class="text-white q-ma-sm">
+              {{chatStore.source_language}}
+            </div>
+            <div class="text-white q-ma-sm">
+              <q-btn class="bg-transparent" outline round color="white" icon="mdi-swap-horizontal" size="sm" @click="chatStore.reverseLanguages()" />
+            </div>
+            <div class="text-white q-ma-sm">
+              {{chatStore.target_language}}
+            </div>
+          </div>
+        </q-menu>
+      </q-btn>
     </div>
   </div>
 </template>
 <script setup>
 import { computed } from "vue";
 import { useChatStore } from "stores/chat_store";
-
 const chatStore = useChatStore();
-const languageOptions = [
-  { label: "English", value: "en" },
-  { label: "Russian", value: "ru" },
-  { label: "Spanish", value: "es" },
-  { label: "French", value: "fr" },
-];
-
 const isTranslateMode = computed(() => chatStore.mode === "Translate");
 </script>
