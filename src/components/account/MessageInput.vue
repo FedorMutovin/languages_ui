@@ -45,7 +45,7 @@ const sendMessage = () => {
       target_language: chatStore.target_language,
     };
 
-    messageChannel.value.speak(request);
+    messageChannel.value.perform('receive', { ...request });
     messageBody.value = "";
   } else {
     console.error("No channel no message");
