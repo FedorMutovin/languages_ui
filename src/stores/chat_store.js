@@ -11,6 +11,10 @@ export const useChatStore = defineStore("ChatStore", {
   },
   actions: {
     appendMessages(data) {
+      if (!data || data.length === 0) {
+        return;
+      }
+
       if (Array.isArray(data)) {
         data.forEach((newMessage) => {
           if (!this.messages.some((message) => message.id === newMessage.id)) {

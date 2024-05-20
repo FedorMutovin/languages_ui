@@ -22,8 +22,8 @@ export const useWebSocketStore = defineStore("WebSocketStore", {
       }
     },
 
-    async subscribeToChannel(channel) {
-      this.cable.subscribe(channel);
+    async subscribeToChannel(channelName, params) {
+      const channel = this.cable.subscribeTo(channelName, params);
       await channel.ensureSubscribed();
       return channel;
     },

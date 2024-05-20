@@ -38,7 +38,6 @@ import { useAccountLearningLanguageStore } from "stores/account_learning_languag
 import ChatWindow from "components/account/ChatWindow.vue";
 import MessageInput from "components/account/MessageInput.vue";
 import AccountSettings from "components/account/AccountSettings.vue";
-import MessagesChannel from "src/channels/messages";
 import ChatMode from "components/account/ChatMode.vue";
 
 const chatStore = useChatStore();
@@ -51,14 +50,16 @@ const toggleLeftDrawer = () => {
 };
 
 onMounted(async () => {
+  if(!accountLearningLanguageStore.id) {
+    await accountLearningLanguageStore.getCurrent()
+  }
   await webSocketStore.connect();
   messageChannel.value = await webSocketStore.subscribeToChannel(
-    new MessagesChannel()
+    "MessagesChannel", {account_learning_language_id: accountLearningLanguageStore.id}
   );
-  messageChannel.value.on("message", (message) => {
-    chatStore.appendMessages(message);
+  messageChannel.value.on("message", (data) => {
+    chatStore.appendMessages(data.messages);
   });
-  await accountLearningLanguageStore.getCurrent()
 });
 
 onBeforeUnmount(() => {
