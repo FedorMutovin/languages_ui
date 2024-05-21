@@ -35,10 +35,10 @@ import { ref, provide, onMounted, onBeforeUnmount } from "vue";
 import { useWebSocketStore } from "stores/websocket_store";
 import { useChatStore } from "stores/chat_store";
 import { useAccountLearningLanguageStore } from "stores/account_learning_language_store";
-import ChatWindow from "components/account/ChatWindow.vue";
-import MessageInput from "components/account/MessageInput.vue";
+import ChatWindow from "components/account/chat/ChatWindow.vue";
+import MessageInput from "components/account/chat/MessageInput.vue";
 import AccountSettings from "components/account/AccountSettings.vue";
-import ChatMode from "components/account/ChatMode.vue";
+import ChatMode from "components/account/chat/ChatMode.vue";
 
 const chatStore = useChatStore();
 const webSocketStore = useWebSocketStore();

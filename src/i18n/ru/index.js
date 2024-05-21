@@ -26,6 +26,11 @@ export default {
     change_translation_direction: "Сменить направление перевода",
     message_input_placeholder: "Напишите что-нибудь",
     chat_assistant_label: "Лекси",
-    chat_me_label: "Я"
+    chat_me_label: "Я",
+    translation_key: 'Перевод',
+    message_key: 'Сообщение',
+    correction_key: 'Рекомендуемая коррекция',
+    explanation_key: 'Подробности',
+    recommendations_key: 'Рекомендации',
   },
 };

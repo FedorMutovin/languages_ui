@@ -8,10 +8,9 @@
           class="q-pa-sm"
           size="9"
           sent
-          text-html
-          :text="[message.body]"
           v-if="message.assistant"
         >
+          <ChatMessage :message-body="message.body"/>
           <template v-slot:name>{{$t("account.chat_assistant_label")}}</template>
           <template v-slot:avatar>
             <q-icon
@@ -20,7 +19,8 @@
             />
           </template>
         </q-chat-message>
-        <q-chat-message bg-color="secondary" class="q-pa-sm" size="10" :text="[message.body]" v-else>
+        <q-chat-message bg-color="secondary" class="q-pa-sm" size="10" v-else>
+          <ChatMessage :message-body="message.body"/>
           <template v-slot:name>{{$t("account.chat_me_label")}}</template>
           <template v-slot:avatar>
             <q-icon
@@ -38,17 +38,10 @@
 <script setup>
 import { watch, ref, onMounted, nextTick} from "vue";
 import { useChatStore } from "stores/chat_store";
+import ChatMessage from "components/account/chat/ChatMessage.vue";
 
 const chatStore = useChatStore();
 const bottom = ref(null);
-
-const scrollToBottom = () => {
-  nextTick(() => {
-    if (bottom.value) {
-      bottom.value.scrollIntoView({ behavior: 'smooth' });
-    }
-  });
-};
 
 onMounted(() => {
   scrollToBottom();
@@ -60,4 +53,12 @@ watch(
     scrollToBottom();
   }
 );
+
+const scrollToBottom = () => {
+  nextTick(() => {
+    if (bottom.value) {
+      bottom.value.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+};
 </script>

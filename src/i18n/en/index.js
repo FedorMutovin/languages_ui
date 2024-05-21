@@ -26,6 +26,11 @@ export default {
     change_translation_direction: "Change translation direction",
     message_input_placeholder: "Write something",
     chat_assistant_label: "Lexi",
-    chat_me_label: "Me"
+    chat_me_label: "Me",
+    translation_key: 'Translation',
+    message_key: 'Message',
+    correction_key: 'Suggested Correction',
+    explanation_key: 'Details',
+    recommendations_key: 'Recommendations',
   },
 };
