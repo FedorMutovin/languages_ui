@@ -7,7 +7,7 @@
         autogrow
         :placeholder="$t('account.message_input_placeholder')"
         v-model="messageBody"
-        @keyup.enter="sendMessage"
+        @keydown.enter.prevent="sendMessage"
       >
         <template v-slot:append>
           <q-btn

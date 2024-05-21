@@ -26,6 +26,11 @@ export default {
     change_translation_direction: "Zmień kierunek tłumaczenia",
     message_input_placeholder: "Napisz coś",
     chat_assistant_label: "Lexi",
-    chat_me_label: "Ja"
+    chat_me_label: "Ja",
+    translation_key: 'Tłumaczenie:',
+    message_key: 'Wiadomość',
+    correction_key: 'Sugerowana korekta',
+    explanation_key: 'Szczegóły',
+    recommendations_key: 'Rekomendacje',
   },
 };
