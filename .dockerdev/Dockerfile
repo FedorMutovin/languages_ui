@@ -2,15 +2,23 @@
 
 ARG NODE_VERSION
 
-FROM node:$NODE_VERSION-alpine
-
+FROM node:$NODE_VERSION-slim as base
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
 WORKDIR /app
 
-COPY package.json yarn.lock ./
+RUN corepack enable
+RUN pnpm add -g @quasar/cli
 
-RUN yarn
-RUN yarn global add @quasar/cli@latest
+FROM base AS deps
+COPY package.json pnpm-lock.yaml ./
+RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store pnpm fetch --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store pnpm install --frozen-lockfile
 
+FROM base
+
+WORKDIR /app
+COPY --from=deps /app/node_modules /app/node_modules
 COPY . .
 
 CMD ["quasar", "dev"]
