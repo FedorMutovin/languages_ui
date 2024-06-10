@@ -20,5 +20,17 @@ export default {
   account: {
     choose_language: "Выберите язык для изучения",
     settings: "Настройки",
+    select_mode: "Выбери режим",
+    translation_mode: "Перевести",
+    correction_mode: "Коррекция",
+    change_translation_direction: "Сменить направление перевода",
+    message_input_placeholder: "Напишите что-нибудь",
+    chat_assistant_label: "Лекси",
+    chat_me_label: "Я",
+    translation_key: 'Перевод',
+    message_key: 'Сообщение',
+    correction_key: 'Рекомендуемая коррекция',
+    explanation_key: 'Подробности',
+    recommendations_key: 'Рекомендации',
   },
 };

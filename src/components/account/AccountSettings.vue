@@ -27,14 +27,26 @@
 import { useUserStore } from "stores/user_store";
 import { useSessionStore } from "stores/session_store";
 import { useAccountLearningLanguageStore } from "stores/account_learning_language_store";
+import { useLanguagesStore } from "stores/languages_store";
 import { useDefaultData } from "components/use/default_data";
 import { useApi } from "components/use/api";
+import { useI18n } from "vue-i18n";
+import {onMounted} from "vue";
 
+const { locale } = useI18n({ useScope: "global" });
+const languagesStore = useLanguagesStore();
 const userStore = useUserStore();
 const sessionStore = useSessionStore();
 const accountLearningLanguageStore = useAccountLearningLanguageStore();
 const { api } = useApi();
 const { loading } = useDefaultData();
+
+onMounted(async () => {
+  if (languagesStore.for_interface.length === 0) {
+    await languagesStore.getAllLanguages();
+  }
+  locale.value = userStore.language.locale
+});
 
 const logout = async () => {
   loading.value = true;

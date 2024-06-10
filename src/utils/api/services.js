@@ -2,7 +2,7 @@ import api from "./index";
 
 export const apiServices = {
   languages: {
-    index: () => api.get(`languages`),
+    index: () => api.get(`public/languages`),
   },
   registrations: {
     create: (data) => api.post(`signup`, data),
@@ -12,12 +12,8 @@ export const apiServices = {
     destroy: () => api.delete(`logout`),
   },
   account_learning_languages: {
-    create: (data) => api.post(`account_learning_languages`, data),
-  },
-  language_assistant: {
-    message_history: () => api.get(`language_assistant/message_history`),
-    create_message: (data) =>
-      api.post(`language_assistant/create_message`, data),
+    create: (data) => api.post(`account/account_learning_languages`, data),
+    current: () => api.get(`/account/account_learning_languages/current`),
   },
 };
 
