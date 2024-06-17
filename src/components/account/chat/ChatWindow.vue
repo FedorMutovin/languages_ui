@@ -9,9 +9,10 @@
           size="9"
           sent
           v-if="message.assistant"
+          :text="[message.body]"
+          text-html
         >
-          <ChatMessage :message-body="message.body"/>
-          <template v-slot:name>{{$t("account.chat_assistant_label")}}</template>
+          <template v-slot:name>{{$t("account.chat.assistant_label")}}</template>
           <template v-slot:avatar>
             <q-icon
               name="mdi-robot-excited-outline"
@@ -19,9 +20,8 @@
             />
           </template>
         </q-chat-message>
-        <q-chat-message bg-color="secondary" class="q-pa-sm" size="10" v-else>
-          <ChatMessage :message-body="message.body"/>
-          <template v-slot:name>{{$t("account.chat_me_label")}}</template>
+        <q-chat-message bg-color="secondary" class="q-pa-sm" size="10" :text="[message.body]" v-else>
+          <template v-slot:name>{{$t("account.chat.me_label")}}</template>
           <template v-slot:avatar>
             <q-icon
               name="mdi-account-school-outline"
@@ -38,7 +38,6 @@
 <script setup>
 import { watch, ref, onMounted, nextTick} from "vue";
 import { useChatStore } from "stores/chat_store";
-import ChatMessage from "components/account/chat/ChatMessage.vue";
 
 const chatStore = useChatStore();
 const bottom = ref(null);

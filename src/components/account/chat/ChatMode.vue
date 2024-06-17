@@ -8,14 +8,14 @@
         behavior="menu"
         dense
         v-model="chatStore.mode"
-        :options="['Translate', 'Correct']"
-        :label="$t('account.select_mode')"
+        :options="chatStore.availableMods"
+        :label="$t('account.chat.mods.select')"
       />
     </div>
     <div class="col-2 col-md-1 flex self-center">
       <q-btn v-if="isTranslateMode" color="primary" flat round icon="mdi-cog-transfer-outline" size="md">
         <q-tooltip class="bg-primary" :offset="[10, 10]">
-          {{ $t("account.change_translation_direction") }}
+          {{ $t("account.chat.change_translation_direction") }}
         </q-tooltip>
         <q-menu
           anchor="top middle"
@@ -23,13 +23,13 @@
         >
           <div class="row q-pa-md bg-primary flex justify-center items-center">
             <div class="text-white q-ma-sm">
-              {{chatStore.source_language}}
+              {{chatStore.sourceLanguage}}
             </div>
             <div class="text-white q-ma-sm">
               <q-btn class="bg-transparent" outline round color="white" icon="mdi-swap-horizontal" size="sm" @click="chatStore.reverseLanguages()" />
             </div>
             <div class="text-white q-ma-sm">
-              {{chatStore.target_language}}
+              {{chatStore.targetLanguage}}
             </div>
           </div>
         </q-menu>
