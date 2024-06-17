@@ -18,19 +18,26 @@ export default {
     signup_submit: "CREATE ACCOUNT",
   },
   account: {
+    chat: {
+      messages: {
+        translation: 'Translation:',
+        message: 'Message',
+        correct: 'Suggested Correction',
+        recommendation: 'Recommendations',
+        explanation: 'Details'
+      },
+      mods: {
+        select: "Select mode",
+        explain: "Explain",
+        translate: "Translate",
+        correct: "Correct"
+      },
+      change_translation_direction: "Change translation direction",
+      message_input_placeholder: "Write something",
+      assistant_label: "Lexi",
+      me_label: "Me",
+    },
     choose_language: "Choose a language to learn",
     settings: "Settings",
-    select_mode: "Select mode",
-    translation_mode: "Translate",
-    correction_mode: "Correct",
-    change_translation_direction: "Change translation direction",
-    message_input_placeholder: "Write something",
-    chat_assistant_label: "Lexi",
-    chat_me_label: "Me",
-    translation_key: 'Translation',
-    message_key: 'Message',
-    correction_key: 'Suggested Correction',
-    explanation_key: 'Details',
-    recommendations_key: 'Recommendations',
   },
 };

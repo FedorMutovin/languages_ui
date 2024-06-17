@@ -5,7 +5,7 @@
         rounded
         outlined
         autogrow
-        :placeholder="$t('account.message_input_placeholder')"
+        :placeholder="$t('account.chat.message_input_placeholder')"
         v-model="messageBody"
         @keydown.enter.prevent="sendMessage"
       >
@@ -30,22 +30,25 @@
 import { inject, ref } from "vue";
 import { useDefaultData } from "components/use/default_data";
 import { useChatStore } from "stores/chat_store";
+import { useUserStore } from "stores/user_store";
 
 const chatStore = useChatStore();
+const userStore = useUserStore();
 const messageChannel = inject("messageChannel");
 const messageBody = ref("");
 const { loading } = useDefaultData();
 
 const sendMessage = () => {
   if (messageChannel) {
-    const request = {
+    const data = {
       message: messageBody.value,
       request: chatStore.mode,
-      source_language: chatStore.source_language,
-      target_language: chatStore.target_language,
+      user_id: userStore.id,
+      source_language: chatStore.sourceLanguage,
+      target_language: chatStore.targetLanguage,
     };
 
-    messageChannel.value.perform('receive', { ...request });
+    messageChannel.value.perform('receive', { ...data });
     messageBody.value = "";
   } else {
     console.error("No channel no message");

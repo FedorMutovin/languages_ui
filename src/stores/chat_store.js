@@ -3,9 +3,10 @@ import { defineStore } from "pinia";
 export const useChatStore = defineStore("ChatStore", {
   state: () => {
     return {
-      mode: "Translate",
-      source_language: "English",
-      target_language: "Russian",
+      availableMods: ['Explain', 'Correct', 'Translate'],
+      mode: "Explain",
+      sourceLanguage: "English",
+      targetLanguage: "Russian",
       messages: [],
     };
   },
@@ -28,9 +29,9 @@ export const useChatStore = defineStore("ChatStore", {
       }
     },
     reverseLanguages() {
-      const targetLanguage = this.target_language;
-      this.target_language = this.source_language
-      this.source_language = targetLanguage;
+      const targetLanguage = this.targetLanguage;
+      this.targetLanguage = this.sourceLanguage
+      this.sourceLanguage = targetLanguage;
     }
   },
 });
